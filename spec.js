@@ -74,6 +74,10 @@ describe('T-Mobile phones page', () => {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000;       
     })
 
+    afterAll(() => {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
+    })
+
     beforeEach(() => {
         getStartPage();
         clickLink("PHONES");
@@ -83,11 +87,23 @@ describe('T-Mobile phones page', () => {
         expect(browser.getTitle()).toEqual("Smartphones & Cell Phones | Compare our Best Cell Phones & Smartphones");
     });
 
-    fit('should filter phones by manufacturer', () => {
+    it('should filter phones by manufacturer', () => {
         browser.executeScript(`window.scrollTo(0,800);`);
         element(by.id("dropdownMenu1")).click();
         element(by.css('p[aria-label = "Apple"]')).click();
         expect(element(by.css('div.viewSection span.ng-binding')).getText()).toEqual("Apple");
     })
 
+    describe('Phone Accessories page', () => {
+        beforeEach(() => {
+            element(by.xpath('//span[contains(text(), "Accessories")]')).click();
+            browser.sleep(5000);            //accessories load for a long time
+        });
+
+        fit('should autocomplete search input', () => {
+            const searchInput = element(by.id("devicesSearchInput"));
+            searchInput.sendKeys("apple").sendKeys(protractor.Key.ENTER);
+            expect(searchInput.getAttribute('value')).toEqual("Apple Watch Nike+ 38mm");
+        })
+    })
 })
