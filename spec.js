@@ -36,7 +36,7 @@ describe('T-Mobile plan page', () => {
         expect(element(by.css("div.price-container.active div.price")).getText()).toEqual("60");
     });
 
-    describe('Military Plans', () => {
+    describe('/ Military Plans page', () => {
 
         beforeAll(() => {
             jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000;       //military plans page takes a very long time to load
@@ -50,7 +50,7 @@ describe('T-Mobile plan page', () => {
             jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;        //returning timeout interval to its default value
         })
 
-        it('should have correct title', () => {            
+        it('should have correct title', () => {
             expect(browser.getTitle()).toEqual("T-Mobile ONE Military Phone Plans | Discounts & More | T-Mobile");
         })
 
@@ -71,7 +71,7 @@ describe('T-Mobile plan page', () => {
 describe('T-Mobile phones page', () => {
 
     beforeAll(() => {
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000;       
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000;
     })
 
     afterAll(() => {
@@ -94,13 +94,20 @@ describe('T-Mobile phones page', () => {
         expect(element(by.css('div.viewSection span.ng-binding')).getText()).toEqual("Apple");
     })
 
-    describe('Phone Accessories page', () => {
+    fit('should have links to phone pages', () => {
+        const firstResultLink = element(by.css("a.product-name"));
+        const phoneName = firstResultLink.getText();
+        firstResultLink.click();
+        expect(browser.getTitle()).toContain(phoneName);
+    })
+
+    describe('/ Phone Accessories page', () => {
         beforeEach(() => {
             element(by.xpath('//span[contains(text(), "Accessories")]')).click();
             browser.sleep(5000);            //accessories load for a long time
         });
 
-        fit('should autocomplete search input', () => {
+        it('should autocomplete search input', () => {
             const searchInput = element(by.id("devicesSearchInput"));
             searchInput.sendKeys("apple").sendKeys(protractor.Key.ENTER);
             expect(searchInput.getAttribute('value')).toEqual("Apple Watch Nike+ 38mm");
