@@ -68,7 +68,15 @@ describe('T-Mobile plan page', () => {
 
 });
 
-xdescribe('T-Mobile phones page', () => {
+describe('T-Mobile phones page', () => {
+
+    beforeAll(() => {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000;       
+    })
+
+    beforeEach(() => {
+        element(by.css('a[data-analytics-id="WEB-26806-military-available -buttonCta"]')).click();
+    })
 
     beforeEach(() => {
         getStartPage();
@@ -78,5 +86,13 @@ xdescribe('T-Mobile phones page', () => {
     it('should have the right title', () => {
         expect(browser.getTitle()).toEqual("Smartphones & Cell Phones | Compare our Best Cell Phones & Smartphones");
     });
+
+    fit('should filter phones by manufacturer', () => {
+        browser.executeScript(`window.scrollTo(0,800);`);
+        element(by.id("dropdownMenu1")).click();
+        element(by.css('p[aria-label = "Apple"]')).click();
+        browser.sleep(4000);
+        expect(element(by.css('div.viewSection span.ng-binding')).getText()).toEqual("Apple");
+    })
 
 })
