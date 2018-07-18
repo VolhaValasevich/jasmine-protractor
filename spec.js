@@ -87,7 +87,6 @@ describe('T-Mobile phones page', () => {
         browser.executeScript(`window.scrollTo(0,800);`);
         element(by.id("dropdownMenu1")).click();
         element(by.css('p[aria-label = "Apple"]')).click();
-        browser.sleep(4000);
         expect(element(by.css('div.viewSection span.ng-binding')).getText()).toEqual("Apple");
     })
 
