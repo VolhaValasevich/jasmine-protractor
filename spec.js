@@ -75,15 +75,11 @@ describe('T-Mobile phones page', () => {
     })
 
     beforeEach(() => {
-        element(by.css('a[data-analytics-id="WEB-26806-military-available -buttonCta"]')).click();
-    })
-
-    beforeEach(() => {
         getStartPage();
         clickLink("PHONES");
     });
 
-    it('should have the right title', () => {
+    it('should have correct title', () => {
         expect(browser.getTitle()).toEqual("Smartphones & Cell Phones | Compare our Best Cell Phones & Smartphones");
     });
 
