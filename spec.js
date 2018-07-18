@@ -58,9 +58,9 @@ describe('T-Mobile plan page', () => {
             expect(element(by.linkText("Verify military status")).isPresent()).toBeTruthy();
         })
 
-        it('should change the price after moving the slider and have special prices for service members', () => {
+        fit('should change the price after moving the slider and have special prices for service members', () => {
             browser.executeScript(`window.scrollTo(0,1300);`);
-            browser.sleep(2000);                            //sometimes the slider doesn't load in time
+            browser.sleep(3000);                            //sometimes the slider doesn't load in time
             dragSliderToTick("second");
             expect(element(by.css("div.price-container.active div.price")).getText()).toEqual("40");
         })
@@ -94,7 +94,7 @@ describe('T-Mobile phones page', () => {
         expect(element(by.css('div.viewSection span.ng-binding')).getText()).toEqual("Apple");
     })
 
-    fit('should have links to phone pages', () => {
+    it('should have links to phone pages', () => {
         const firstResultLink = element(by.css("a.product-name"));
         const phoneName = firstResultLink.getText();
         firstResultLink.click();
@@ -111,6 +111,10 @@ describe('T-Mobile phones page', () => {
             const searchInput = element(by.id("devicesSearchInput"));
             searchInput.sendKeys("apple").sendKeys(protractor.Key.ENTER);
             expect(searchInput.getAttribute('value')).toEqual("Apple Watch Nike+ 38mm");
+        })
+
+        it('should display prices from low to high by default', () => {
+            expect(element(by.css('button[id = "sort"] span')).getText()).toEqual("Price low to high");
         })
     })
 })
