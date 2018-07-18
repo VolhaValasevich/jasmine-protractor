@@ -58,7 +58,7 @@ describe('T-Mobile plan page', () => {
             expect(element(by.linkText("Verify military status")).isPresent()).toBeTruthy();
         })
 
-        fit('should change the price after moving the slider and have special prices for service members', () => {
+        it('should change the price after moving the slider and have special prices for service members', () => {
             browser.executeScript(`window.scrollTo(0,1300);`);
             browser.sleep(3000);                            //sometimes the slider doesn't load in time
             dragSliderToTick("second");
