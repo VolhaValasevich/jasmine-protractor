@@ -7,7 +7,8 @@
     "protractor": "^5.3.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./node_modules/protractor/bin/protractor conf.js",
+    "eslint" : "node ./node_modules/eslint/bin/eslint.js *.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/VolhaValasevich/jasmine-protractor/issues"
   },
-  "homepage": "https://github.com/VolhaValasevich/jasmine-protractor#readme"
+  "homepage": "https://github.com/VolhaValasevich/jasmine-protractor#readme",
+  "devDependencies": {
+    "eslint": "^5.2.0"
+  }
 }
