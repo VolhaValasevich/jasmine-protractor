@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "protractor": "^5.3.2"
+    "protractor": "^5.3.2",
+    "winston": "^3.0.0",
+    "eslint": "^5.2.0"
   },
   "scripts": {
     "test": "node ./node_modules/protractor/bin/protractor conf.js",
-    "eslint" : "node ./node_modules/eslint/bin/eslint.js *.js"
+    "eslint": "node ./node_modules/eslint/bin/eslint.js *.js"
   },
   "repository": {
     "type": "git",
@@ -20,8 +22,5 @@
   "bugs": {
     "url": "https://github.com/VolhaValasevich/jasmine-protractor/issues"
   },
-  "homepage": "https://github.com/VolhaValasevich/jasmine-protractor#readme",
-  "devDependencies": {
-    "eslint": "^5.2.0"
-  }
+  "homepage": "https://github.com/VolhaValasevich/jasmine-protractor#readme"
 }
