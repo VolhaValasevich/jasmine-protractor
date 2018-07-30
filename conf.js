@@ -3,7 +3,7 @@ const customReporter = require("./util/jasmine-custom-reporter.js");
 exports.config = {
     seleniumAddress: 'http://localhost:4444/wd/hub',
 
-    specs: ['./specs/mobilePlansPage.js'],
+    specs: ['./specs/*.js'],
 
     capabilities: {
         browserName: 'chrome'

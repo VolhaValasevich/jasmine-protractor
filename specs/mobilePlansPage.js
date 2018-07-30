@@ -1,7 +1,7 @@
 const helper = require("../util/elementHelper.js");
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000;
 
-fdescribe('T-Mobile plans page', () => {
+describe('T-Mobile plans page', () => {
 
     beforeAll(() => {
         helper.getStartPage();

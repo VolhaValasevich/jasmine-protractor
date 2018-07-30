@@ -48,11 +48,18 @@ class ElementHelper {
     }
 
     isElementPresent(element) {
+        logger.info(`Checking if the element is present`);
         return element.isPresent();
     }
 
     scrollTo(x, y) {
+        logger.info(`Scrolling to position ${x}, ${y}`);
         return browser.executeScript(`window.scrollTo(${x},${y});`);
+    }
+
+    sendKeys(element, keys) {
+        logger.info(`Sending [${keys}] keys to the element`);
+        element.sendKeys(keys);
     }
 }
 

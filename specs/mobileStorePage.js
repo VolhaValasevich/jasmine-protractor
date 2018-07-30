@@ -1,58 +1,48 @@
-function getStartPage() {
-    browser.get("https://www.t-mobile.com/");
-}
-
-function clickLink(linktext) {
-    element(by.linkText(linktext)).click();
-}
+const helper = require("../util/elementHelper.js");
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000;
 
 describe('T-Mobile phones page', () => {
 
     beforeAll(() => {
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000;
-    });
-
-    afterAll(() => {
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
-    });
-
-    beforeEach(() => {
-        getStartPage();
-        clickLink("PHONES");
+        helper.getStartPage();
+        helper.clickLink("PHONES");
     });
 
     it('should have correct title', () => {
-        expect(browser.getTitle()).toEqual("Smartphones & Cell Phones | Compare our Best Cell Phones & Smartphones");
+        expect(helper.getPageTitle()).toEqual("Smartphones & Cell Phones | Compare our Best Cell Phones & Smartphones");
     });
 
     it('should filter phones by manufacturer', () => {
-        browser.executeScript(`window.scrollTo(0,800);`);
-        element(by.id("dropdownMenu1")).click();
-        element(by.css('p[aria-label = "Apple"]')).click();
-        expect(element(by.css('div.viewSection span.ng-binding')).getText()).toEqual("Apple");
+        helper.scrollTo(0, 800);
+        helper.getPageObjectElement("Filter Button").click();
+        helper.getPageObjectElement("Apple Checkbox").click();
+        const firstSearchResult = helper.getPageObjectElement("First Search Result");
+        expect(firstSearchResult.getText()).toContain("Apple");
     });
 
     it('should have links to phone pages', () => {
-        const firstResultLink = element(by.css("a.product-name"));
-        const phoneName = firstResultLink.getText();
-        firstResultLink.click();
-        expect(browser.getTitle()).toContain(phoneName);
+        const firstSearchResult = helper.getPageObjectElement("First Search Result");
+        const phoneName = firstSearchResult.getText();
+        firstSearchResult.click();
+        expect(helper.getPageTitle()).toContain(phoneName);
     });
 
     describe('/ Phone Accessories page', () => {
-        beforeEach(() => {
-            element(by.xpath('//span[contains(text(), "Accessories")]')).click();
-            browser.sleep(5000); // accessories load for a long time
+        beforeAll(() => {
+            helper.getPageObjectElement("Accessories Icon").click();
+            // browser.sleep(5000); // accessories load for a long time
         });
 
         it('should autocomplete search input', () => {
-            const searchInput = element(by.id("devicesSearchInput"));
-            searchInput.sendKeys("apple").sendKeys(protractor.Key.ENTER);
+            const searchInput = helper.getPageObjectElement("Search Input");
+            helper.sendKeys(searchInput, "apple");
+            helper.sendKeys(searchInput, protractor.Key.ENTER);
             expect(searchInput.getAttribute('value')).toEqual("Apple Watch Nike+ 38mm");
         });
 
         it('should display prices from low to high by default', () => {
-            expect(element(by.css('button[id = "sort"] span')).getText()).toEqual("Price low to high");
+            const defaultSortOrder = helper.getPageObjectElement("Sort Order Dropdown Text");
+            expect(defaultSortOrder.getText()).toEqual("Price low to high");
         });
     });
 });

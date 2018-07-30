@@ -18,7 +18,10 @@ class TMobilePO {
             "Apple Checkbox": "label[for='filter-pm-0']",
             "LG Checkbox": "label[for='filter-pm-1']",
             "Samsung Checkbox": "label[for='filter-pm-2']",
-            "First Search Result": "a.product-name"
+            "First Search Result": "a.product-name",
+            "Accessories Icon": "i.fa-headphones",
+            "Search Input": "input[id='devicesSearchInput']",
+            "Sort Order Dropdown Text": "button[id = 'sort'] span"
         };
     }
 }
