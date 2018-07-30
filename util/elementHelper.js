@@ -1,5 +1,6 @@
 const TMobilePO = require('./TMobilePO.js');
 const logger = require("./logger.js").logger;
+const until = protractor.ExpectedConditions;
 
 class ElementHelper {
     getPageObjectElement(alias) {
@@ -48,8 +49,13 @@ class ElementHelper {
     }
 
     isElementPresent(element) {
-        logger.info(`Checking if the element is present`);
+        logger.info('Checking if the element is present');
         return element.isPresent();
+    }
+
+    waitUntilPresent(alias) {
+        logger.info(`Waiting until "${alias}" is present`);
+        browser.wait(until.presenceOf(this.getPageObjectElement(alias)), 30000);
     }
 
     scrollTo(x, y) {

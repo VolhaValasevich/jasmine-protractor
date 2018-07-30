@@ -13,7 +13,7 @@ describe('T-Mobile phones page', () => {
     });
 
     it('should filter phones by manufacturer', () => {
-        helper.scrollTo(0, 800);
+        helper.scrollTo(0, 700);
         helper.getPageObjectElement("Filter Button").click();
         helper.getPageObjectElement("Apple Checkbox").click();
         const firstSearchResult = helper.getPageObjectElement("First Search Result");
@@ -30,10 +30,11 @@ describe('T-Mobile phones page', () => {
     describe('/ Phone Accessories page', () => {
         beforeAll(() => {
             helper.getPageObjectElement("Accessories Icon").click();
-            // browser.sleep(5000); // accessories load for a long time
+            // helper.waitUntilPresent("Search Input");  - for some reason it results in Angular timeout
         });
 
         it('should autocomplete search input', () => {
+            browser.sleep(2000);
             const searchInput = helper.getPageObjectElement("Search Input");
             helper.sendKeys(searchInput, "apple");
             helper.sendKeys(searchInput, protractor.Key.ENTER);

@@ -18,7 +18,6 @@ class myReporter {
         logger.verbose('Spec: ' + result.description + ' was ' + result.status);
         for (let i = 0; i < result.failedExpectations.length; i++) {
             logger.error('Failure: ' + result.failedExpectations[i].message);
-            logger.error(result.failedExpectations[i].stack);
         }
     }
 
@@ -26,7 +25,6 @@ class myReporter {
         logger.verbose('Suite: ' + result.description + ' was ' + result.status);
         for (let i = 0; i < result.failedExpectations.length; i++) {
             logger.error('AfterAll ' + result.failedExpectations[i].message);
-            logger.error(result.failedExpectations[i].stack);
         }
     }
 
