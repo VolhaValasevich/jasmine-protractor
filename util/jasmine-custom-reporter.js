@@ -3,7 +3,7 @@ const logger = require("./logger.js").logger;
 class myReporter {
 
     jasmineStarted (suiteInfo) {
-        logger.warn('Running suite with ' + suiteInfo.totalSpecsDefined);
+        logger.warn('Running suite with ' + suiteInfo.totalSpecsDefined + ' specs');
     }
 
     suiteStarted (result) {
