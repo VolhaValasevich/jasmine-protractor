@@ -9,6 +9,7 @@
     "gulp-protractor": "^4.1.0",
     "gulp-shell": "^0.6.5",
     "protractor": "^5.3.2",
+    "protractor-jasmine2-html-reporter": "0.0.7",
     "winston": "^3.0.0"
   },
   "scripts": {

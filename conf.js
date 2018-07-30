@@ -1,4 +1,5 @@
 const customReporter = require("./util/jasmine-custom-reporter.js");
+const Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
 
 exports.config = {
     seleniumAddress: 'http://localhost:4444/wd/hub',
@@ -16,6 +17,12 @@ exports.config = {
 
     onPrepare: () => {
         jasmine.getEnv().addReporter(new customReporter());
+        jasmine.getEnv().addReporter(
+            new Jasmine2HtmlReporter({
+                savePath: './reports',
+                takeScreenshotsOnlyOnFailures: true
+            })
+        );
         browser.driver.manage().window().maximize();
     }
 };
