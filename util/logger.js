@@ -10,7 +10,8 @@ class Logger {
                             all: true
                         }),
                         winston.format.simple()
-                    )
+                    ),
+                    level: "debug"
                 }),
                 new winston.transports.File({filename: 'combined.log'})
             ]

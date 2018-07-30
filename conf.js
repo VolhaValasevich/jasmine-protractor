@@ -1,4 +1,5 @@
-// conf.js
+const customReporter = require("./util/jasmine-custom-reporter.js");
+
 exports.config = {
     seleniumAddress: 'http://localhost:4444/wd/hub',
 
@@ -8,7 +9,13 @@ exports.config = {
         browserName: 'chrome'
     },
 
+    jasmineNodeOpts: {
+        // Remove default dot reporter
+        print: () => { }
+    },
+
     onPrepare: () => {
+        jasmine.getEnv().addReporter(new customReporter());
         browser.driver.manage().window().maximize();
     }
 };

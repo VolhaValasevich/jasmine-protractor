@@ -1,85 +1,49 @@
 const helper = require("../util/elementHelper.js");
 const logger = require("../util/logger.js").logger;
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000;
 
-function getStartPage() {
-    logger.info("Getting the start page");
-    browser.get("https://www.t-mobile.com/");
-}
-
-function clickLink(linktext) {
-    logger.info(`Clicking the link with text ${linktext}`);
-    element(by.linkText(linktext)).click();
-}
-
-describe('T-Mobile plan page', () => {
+fdescribe('T-Mobile plans page', () => {
 
     beforeAll(() => {
-        logger.warn("Executing test: should have correct title");
-        getStartPage();
-        clickLink("PLANS");
+        helper.getStartPage();
+        helper.clickLink("PLANS");
     });
-
-    function dragSliderToTick(pos) {
-        let locator;
-        switch (pos) {
-        case "second": case "third": {
-            locator = by.css(`div.${pos}-tick`);
-            break;
-        }
-        case "first": {
-            locator = by.css('div.item-alt-one');
-            break;
-        }
-        case "fourth": {
-            locator = by.css('div.price-slider-container');
-            break;
-        }
-        default: {
-            locator = by.css('div.price-slider-container');
-            break;
-        }
-        }
-        logger.info(`Dragging the slider to position "${pos}"[${locator}]`);
-        return browser.actions().dragAndDrop(element(by.css('input.slider-range')), element(locator)).mouseUp().perform();
-    }
 
     it('should have correct title', () => {
-        expect(browser.getTitle()).toEqual("Cell Phone Plans | Family Plans | Compare Cell Phone Plans | T-Mobile");
+        logger.info("Checking T-Mobile plans page title");
+        expect(helper.getPageTitle()).toEqual("Cell Phone Plans | Family Plans | Compare Cell Phone Plans | T-Mobile");
     });
 
-    fit('should change the price after moving the slider', () => {
-        dragSliderToTick("second");
-        // expect(element(by.css("div.price-container.active div.price")).getText()).toEqual("60");
-        expect((helper.getElement("div.price-contttttainer.active div.price")).getText()).toEqual("60");
+    it('should change the price after moving the slider', () => {
+        logger.info("Checking the price slider on T-Mobile plans page");
+        helper.dragSliderToTick("second");
+        const priceContainer = helper.getPageObjectElement("Monthly Price");
+        expect(priceContainer.getText()).toEqual("60");
     });
 
-    describe('/ Military Plans page', () => {
+    describe('Military Plans page', () => {
 
         beforeAll(() => {
-            jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000; // military plans page takes a very long time to load
-        });
-
-        beforeEach(() => {
-            element(by.css('a[data-analytics-id="WEB-26806-military-available -buttonCta"]')).click();
-        });
-
-        afterAll(() => {
-            jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000; // returning timeout interval to its default value
+            helper.getPageObjectElement("Military Plans Button").click();
         });
 
         it('should have correct title', () => {
-            expect(browser.getTitle()).toEqual("T-Mobile ONE Military Phone Plans | Discounts & More | T-Mobile");
+            logger.info("Checking T-Mobile military plans page title");
+            expect(helper.getPageTitle()).toEqual("T-Mobile ONE Military Phone Plans | Discounts & More | T-Mobile");
         });
 
         it('should have an option for verifying military status', () => {
-            expect(element(by.linkText("Verify military status")).isPresent()).toBeTruthy();
+            logger.info("Checking the presence of 'Verify military status' button");
+            const verifyButton = helper.getPageObjectElement("Verify Military Status Button");
+            expect(helper.isElementPresent(verifyButton)).toBeTruthy();
         });
 
         it('should change the price after moving the slider and have special prices for service members', () => {
-            browser.executeScript(`window.scrollTo(0,1300);`);
-            browser.sleep(3000); // sometimes the slider doesn't load in time
-            dragSliderToTick("second");
-            expect(element(by.css("div.price-container.active div.price")).getText()).toEqual("40");
+            logger.info("Checking the price slider on T-Mobile military plans page");
+            helper.scrollTo(0, 1300);
+            helper.dragSliderToTick("second");
+            const priceContainer = helper.getPageObjectElement("Monthly Price");
+            expect(priceContainer.getText()).toEqual("40");
         });
     });
 
