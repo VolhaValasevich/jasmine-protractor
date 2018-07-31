@@ -33,11 +33,15 @@ describe('T-Mobile plans page', () => {
             expect(helper.isElementPresent(verifyButton)).toBeTruthy();
         });
 
-        it('should change the price after moving the slider and have special prices for service members', () => {
-            helper.scrollTo(0, 1300);
+        it('should display a modal window with prices', () => {
+
+            /* helper.scrollTo(0, 1300);
             helper.dragSliderToTick("second");
             const priceContainer = helper.getPageObjectElement("Monthly Price");
-            expect(priceContainer.getText()).toEqual("40");
+            expect(priceContainer.getText()).toEqual("40");*/
+            helper.clickLink("See pricing breakdown.");
+            const modalWindow = helper.getPageObjectElement("Pricing Modal Window");
+            expect(helper.isElementPresent(modalWindow)).toBeTruthy();
         });
     });
 
