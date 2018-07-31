@@ -13,6 +13,7 @@
     "winston": "^3.0.0"
   },
   "scripts": {
+    "postinstall": "node ./node_modules/protractor/bin/webdriver-manager update",
     "test": "node ./node_modules/protractor/bin/protractor conf.js",
     "eslint": "node ./node_modules/eslint/bin/eslint.js *.js"
   },
