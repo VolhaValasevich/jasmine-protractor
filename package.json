@@ -10,6 +10,7 @@
     "gulp-shell": "^0.6.5",
     "protractor": "^5.3.2",
     "protractor-jasmine2-html-reporter": "0.0.7",
+    "run-sequence": "^2.2.1",
     "winston": "^3.0.0"
   },
   "scripts": {

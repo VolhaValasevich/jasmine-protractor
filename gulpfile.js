@@ -1,8 +1,9 @@
 const gulp = require("gulp");
 const shell = require('gulp-shell');
+const runSequence = require('run-sequence').use(gulp);
 const protractor = require("gulp-protractor").protractor;
 
-gulp.task('start', ['server'], () => {
+gulp.task('start', () => {
     return gulp.src([])
         .pipe(protractor({
             configFile: "./conf.js",
@@ -13,32 +14,23 @@ gulp.task('start', ['server'], () => {
         });
 });
 
-gulp.task('server', ['linter'], (done) => {
+gulp.task('server', (done) => {
     gulp.src('*.js', {read: false})
         .pipe(shell([
-            'start cmd /k "node_modules\\.bin\\webdriver-manager start"'
+            "node_modules\\.bin\\webdriver-manager start"
         ]));
     setTimeout(() => {
         done();
     }, 4000);
 });
 
-
-gulp.task('npm_install', () => {
-    return gulp.src('*.js', {read: false})
-        .pipe(shell([
-            'npm install'
-        ]));
-});
-
-gulp.task('linter', () => {
+gulp.task('eslint', () => {
     return gulp.src('*.js', {read: false})
         .pipe(shell([
             'eslint ./ --fix'
         ]));
 });
 
-gulp.task('build', ['npm_install', 'linter'], () => {
-
+gulp.task('default', () => {
+    runSequence('server', 'start');
 });
-gulp.task('default', ['start']);

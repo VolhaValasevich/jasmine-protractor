@@ -27,18 +27,20 @@ describe('T-Mobile phones page', () => {
         expect(helper.getPageTitle()).toContain(phoneName);
     });
 
-    describe('/ Phone Accessories page', () => {
-        beforeAll(() => {
+    describe('Phone Accessories page', () => {
+        beforeAll(async () => {
+            helper.clickLink("PHONES");
             helper.getPageObjectElement("Accessories Icon").click();
-            // helper.waitUntilPresent("Search Input");  - for some reason it results in Angular timeout
+            browser.sleep(3000);
+            // await helper.waitUntilPresent("Search Input"); // for some reason it results in Angular timeout
         });
 
-        it('should autocomplete search input', () => {
-            browser.sleep(2000);
+        it('should autocomplete search input', async () => {
             const searchInput = helper.getPageObjectElement("Search Input");
             helper.sendKeys(searchInput, "apple");
             helper.sendKeys(searchInput, protractor.Key.ENTER);
-            expect(searchInput.getAttribute('value')).toEqual("Apple Watch Nike+ 38mm");
+            const text = await searchInput.getAttribute('value');
+            expect(text).toEqual("Apple Watch Nike+ 38mm");
         });
 
         it('should display prices from low to high by default', () => {

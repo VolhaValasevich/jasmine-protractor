@@ -38,7 +38,7 @@ class Logger {
                         }),
                         myFormat
                     ),
-                    level: "check"
+                    level: "finish"
                 }),
                 new transports.File({filename: 'combined.log'})
             ]
