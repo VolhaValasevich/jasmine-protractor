@@ -1,4 +1,9 @@
-const winston = require("winston");
+const {createLogger, format, transports, addColors} = require('winston');
+const {combine, timestamp, label, printf} = format;
+
+const myFormat = printf(info => {
+    return `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`;
+});
 
 const myCustomLevels = {
     levels: {
@@ -15,23 +20,27 @@ const myCustomLevels = {
     }
 };
 
-winston.addColors(myCustomLevels.colors);
+addColors(myCustomLevels.colors);
 
 class Logger {
     constructor() {
-        this.logger = winston.createLogger({
+        this.logger = createLogger({
             levels: myCustomLevels.levels,
             transports: [
-                new winston.transports.Console({
-                    format: winston.format.combine(
-                        winston.format.colorize({
+                new transports.Console({
+                    format: combine(
+                        label({label: 't-mobile.com'}),
+                        timestamp({
+                            format: 'YYYY-MM-DD HH:mm:ss'
+                        }),
+                        format.colorize({
                             all: true
                         }),
-                        winston.format.simple()
+                        myFormat
                     ),
-                    level: "finish"
+                    level: "check"
                 }),
-                new winston.transports.File({filename: 'combined.log'})
+                new transports.File({filename: 'combined.log'})
             ]
         });
     }
