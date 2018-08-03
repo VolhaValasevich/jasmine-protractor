@@ -17,7 +17,7 @@ gulp.task('start', () => {
 gulp.task('server', (done) => {
     gulp.src('*.js', {read: false})
         .pipe(shell([
-            "node_modules\\.bin\\webdriver-manager start"
+            'start cmd /k "node_modules\\.bin\\webdriver-manager start"'
         ]));
     setTimeout(() => {
         done();
