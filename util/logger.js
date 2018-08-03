@@ -40,7 +40,7 @@ class Logger {
                     ),
                     level: "finish"
                 }),
-                new transports.File({filename: 'combined.log'})
+                new transports.File({filename: 'combined.log', format: format.simple(), level: "check"})
             ]
         });
     }
